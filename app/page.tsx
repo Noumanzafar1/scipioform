@@ -4,6 +4,87 @@ import { useState, useEffect } from 'react'
 
 const WA_LINK = 'https://wa.me/923008976015'
 
+function ContactForm() {
+  const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+
+  const handle = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setForm({ ...form, [e.target.name]: e.target.value })
+  }
+
+  const submit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    await new Promise(r => setTimeout(r, 800))
+    setLoading(false)
+    setSubmitted(true)
+  }
+
+  if (submitted) return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100%', minHeight: 320, textAlign: 'center' }}>
+      <div style={{ width: 48, height: 48, background: '#C9A84C', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 22, marginBottom: 20 }}>✓</div>
+      <div style={{ fontFamily: 'Georgia, serif', fontSize: 22, color: '#0D1B2A', fontStyle: 'italic', marginBottom: 10 }}>Message received.</div>
+      <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, color: '#888', lineHeight: 1.8 }}>We will be in touch within one business day.<br />For faster responses, reach us on WhatsApp.</div>
+      <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
+        style={{ marginTop: 24, background: '#0D1B2A', color: '#C9A84C', fontFamily: 'Arial, sans-serif', fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '12px 24px', textDecoration: 'none' }}>
+        Open WhatsApp
+      </a>
+    </div>
+  )
+
+  return (
+    <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#0D1B2A', fontStyle: 'italic', marginBottom: 8 }}>Send us a message</div>
+      {[
+        { label: 'Your Name', name: 'name', type: 'text', placeholder: 'Muhammad Ali' },
+        { label: 'Email Address', name: 'email', type: 'email', placeholder: 'you@company.com' },
+        { label: 'Company', name: 'company', type: 'text', placeholder: 'Your Company Name' },
+      ].map(f => (
+        <div key={f.name}>
+          <label style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: '#0D1B2A', letterSpacing: '0.12em', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>{f.label}</label>
+          <input
+            type={f.type}
+            name={f.name}
+            required
+            placeholder={f.placeholder}
+            value={form[f.name as keyof typeof form]}
+            onChange={handle}
+            style={{ width: '100%', background: '#fff', border: '1px solid #E0DBD0', padding: '10px 14px', fontFamily: 'Arial, sans-serif', fontSize: 13, color: '#0D1B2A', outline: 'none' }}
+          />
+        </div>
+      ))}
+      <div>
+        <label style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: '#0D1B2A', letterSpacing: '0.12em', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>What are you looking for?</label>
+        <select name="service" onChange={handle}
+          style={{ width: '100%', background: '#fff', border: '1px solid #E0DBD0', padding: '10px 14px', fontFamily: 'Arial, sans-serif', fontSize: 13, color: '#0D1B2A', outline: 'none' }}>
+          <option value="">Select a service</option>
+          <option value="lead-gen">B2B Lead Generation</option>
+          <option value="strategy">Growth Strategy</option>
+          <option value="bd-partnership">BD Partnership</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div>
+        <label style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: '#0D1B2A', letterSpacing: '0.12em', textTransform: 'uppercase', display: 'block', marginBottom: 6 }}>Message</label>
+        <textarea
+          name="message"
+          required
+          rows={4}
+          placeholder="Tell us about your business and what you want to achieve..."
+          value={form.message}
+          onChange={handle}
+          style={{ width: '100%', background: '#fff', border: '1px solid #E0DBD0', padding: '10px 14px', fontFamily: 'Arial, sans-serif', fontSize: 13, color: '#0D1B2A', outline: 'none', resize: 'none' }}
+        />
+      </div>
+      <button type="submit" disabled={loading}
+        style={{ background: '#0D1B2A', color: '#C9A84C', fontFamily: 'Arial, sans-serif', fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '16px', border: 'none', cursor: 'pointer', opacity: loading ? 0.7 : 1 }}>
+        {loading ? 'Sending...' : 'Send Message'}
+      </button>
+    </form>
+  )
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -186,7 +267,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      
+
 {/* ABOUT */}
       <section id="about" style={{ background: '#FAF8F3', padding: '80px 40px', borderTop: '1px solid #E8E0CC' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72, alignItems: 'center' }}>
@@ -300,7 +381,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CONTACT */}
+{/* CONTACT */}
       <section id="contact" style={{ background: '#FAF8F3', padding: '80px 40px' }}>
         <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 72 }}>
           <div>
@@ -314,34 +395,23 @@ export default function Home() {
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
               {[
-                { icon: '✉', label: 'growth@scipioform.com', href: 'mailto:growth@scipioform.com' },
-                { icon: '☎', label: '+92 300 897 6015', href: WA_LINK },
-                { icon: '◎', label: 'Lahore, Pakistan', href: '#' },
+                { icon: '✉', label: 'growth@scipioform.com' },
+                { icon: '☎', label: '+92 300 897 6015' },
+                { icon: '◎', label: 'Lahore, Pakistan' },
               ].map(c => (
-                <a key={c.label} href={c.href} target="_blank" rel="noopener noreferrer"
-                  style={{ display: 'flex', alignItems: 'center', gap: 14, textDecoration: 'none' }}>
+                <div key={c.label} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
                   <div style={{ width: 36, height: 36, background: '#F0EBE0', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#C9A84C', fontSize: 14, flexShrink: 0 }}>{c.icon}</div>
                   <span style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: '#0D1B2A' }}>{c.label}</span>
-                </a>
+                </div>
               ))}
             </div>
           </div>
           <div style={{ background: '#F0EBE0', padding: 40 }}>
-            <div style={{ fontFamily: 'Georgia, serif', fontSize: 20, color: '#0D1B2A', fontStyle: 'italic', marginBottom: 6 }}>Prefer to message directly?</div>
-            <p style={{ fontFamily: 'Arial, sans-serif', fontSize: 12, color: '#888', lineHeight: 1.8, marginBottom: 28 }}>
-              We respond to all serious enquiries within one business day. For faster responses, WhatsApp is the best channel.
-            </p>
-            <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
-              style={{ display: 'block', background: '#0D1B2A', color: '#C9A84C', fontFamily: 'Arial, sans-serif', fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '16px 28px', textDecoration: 'none', textAlign: 'center', marginBottom: 16 }}>
-              Open WhatsApp
-            </a>
-            <a href="mailto:growth@scipioform.com"
-              style={{ display: 'block', background: 'transparent', color: '#0D1B2A', fontFamily: 'Arial, sans-serif', fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '15px 28px', textDecoration: 'none', textAlign: 'center', border: '1px solid #0D1B2A' }}>
-              Send an Email
-            </a>
+            <ContactForm />
           </div>
         </div>
       </section>
+
 
       {/* FOOTER */}
       <footer style={{ background: '#080F17', padding: '48px 40px 28px' }}>
