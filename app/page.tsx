@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 
 const WA_LINK = 'https://wa.me/923008976015'
+const CAL_LINK = 'https://calendly.com/scipioform/30min'
 
 function ContactForm() {
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '' })
@@ -119,7 +120,7 @@ export default function Home() {
               </a>
             ))}
           </div>
-          <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
+          <a href={CAL_LINK} target="_blank" rel="noopener noreferrer"
             style={{ fontFamily: 'Arial, sans-serif', fontSize: 10, color: '#0D1B2A', border: '1px solid #0D1B2A', padding: '9px 20px', letterSpacing: '0.12em', textTransform: 'uppercase', textDecoration: 'none' }}>
             Book a Call
           </a>
@@ -374,7 +375,7 @@ export default function Home() {
             <div style={{ fontFamily: 'Georgia, serif', fontSize: 30, color: '#0D1B2A', fontStyle: 'italic', marginBottom: 8 }}>Ready to build your pipeline?</div>
             <div style={{ fontFamily: 'Arial, sans-serif', fontSize: 13, color: 'rgba(13,27,42,0.6)' }}>Let us have a direct conversation about what Scipioform can do for your business.</div>
           </div>
-          <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
+          <a href={CAL_LINK} target="_blank" rel="noopener noreferrer"
             style={{ background: '#0D1B2A', color: '#C9A84C', fontFamily: 'Arial, sans-serif', fontSize: 10, fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', padding: '16px 36px', textDecoration: 'none', whiteSpace: 'nowrap' }}>
             Book a Call
           </a>
