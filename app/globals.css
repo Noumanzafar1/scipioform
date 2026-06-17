@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+::selection {
+  background: #C9A84C;
+  color: #0D1B2A;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0D1B2A; }
+::-webkit-scrollbar-thumb { background: #C9A84C; border-radius: 3px; }
+
+html { scroll-behavior: smooth; }
+body { -webkit-font-smoothing: antialiased; }
