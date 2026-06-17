@@ -8,7 +8,7 @@ export const metadata = {
   description: 'Scipioform partners with CEOs, COOs, and senior leadership to build the pipeline, strategy, and outreach that drives real commercial results.',
 }
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>{children}</body>
